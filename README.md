@@ -17,9 +17,9 @@ AI-powered code assistant for Unity Editor. Get intelligent code suggestions, re
 ## Requirements
 
 - **Unity 6 or above**
-- **Local Env**:
+- **For Local Env**:
   - **LM Studio**: Install LM Studio with your prefered model loaded
-- **External APIs**:
+- **For External APIs**:
   - **API Keys**: Your own API keys from OpenAI or Anthropic (BYOK - Bring Your Own Key)
   - **Proxy Server**: AWS Lambda proxy endpoint (see Setup guide below)
   
@@ -27,12 +27,12 @@ AI-powered code assistant for Unity Editor. Get intelligent code suggestions, re
 ## Installation
 
 ### From Unity Asset Store
-1. Download the package from the Unity Asset Store
+1. Download the package from the Unity Asset Store or from this repo
 2. Import the `.unitypackage` into your Unity project
 3. The plugin will appear in `Window > AI Assistant`
 
 ### From Unity Package Manager (UPM)
-1. Add the package via Git URL or scoped registry
+1. Add the package via Git URL in Unity Package Manager window
 2. The plugin will appear in `Window > AI Assistant`
 
 ## Quick Setup

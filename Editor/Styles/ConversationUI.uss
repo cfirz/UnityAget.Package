@@ -1,0 +1,134 @@
+/* ConversationUI Styles - History Dropdown */
+
+/* Dropdown panel */
+.conversation-dropdown {
+    position: absolute;
+    width: 350px;
+    background-color: rgba(56, 56, 56, 1);
+    border-top-width: 1px;
+    border-bottom-width: 1px;
+    border-left-width: 1px;
+    border-right-width: 1px;
+    border-top-color: rgba(77, 77, 77, 1);
+    border-bottom-color: rgba(77, 77, 77, 1);
+    border-left-color: rgba(77, 77, 77, 1);
+    border-right-color: rgba(77, 77, 77, 1);
+}
+
+/* Search container */
+.search-container {
+    flex-direction: row;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    padding-left: 8px;
+    padding-right: 8px;
+    border-bottom-width: 1px;
+    border-bottom-color: rgba(77, 77, 77, 1);
+    position: relative;
+}
+
+/* Search icon */
+.search-icon {
+    margin-right: 8px;
+    font-size: 14px;
+}
+
+/* Text field container */
+.text-field-container {
+    flex-grow: 1;
+    position: relative;
+}
+
+/* Search field */
+.search-field {
+    width: 100%;
+    padding-right: 24px;
+}
+
+/* Clear button */
+.clear-button {
+    position: absolute;
+    right: 8px;
+    top: 0;
+    bottom: 0;
+    font-size: 14px;
+    color: rgba(179, 179, 179, 1);
+    align-self: center;
+}
+
+/* Conversation list */
+.conversation-list {
+    flex-grow: 1;
+    min-height: 300px;
+}
+
+/* Date group container */
+.date-group-container {
+    margin-bottom: 10px;
+}
+
+/* Date header */
+.date-header {
+    font-size: 11px;
+    color: rgba(153, 153, 153, 1);
+    padding-top: 8px;
+    padding-bottom: 4px;
+    padding-left: 8px;
+    -unity-text-align: middle-left;
+}
+
+/* New conversation item */
+.new-conversation-item {
+    flex-direction: row;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    padding-left: 12px;
+    padding-right: 12px;
+    background-color: rgba(51, 102, 204, 0.3);
+    margin-bottom: 2px;
+}
+
+.new-conversation-item:hover {
+    background-color: rgba(51, 102, 204, 0.5);
+}
+
+/* New conversation title */
+.new-conversation-title {
+    font-size: 13px;
+    color: rgba(179, 204, 255, 1);
+    flex-grow: 1;
+    -unity-text-align: middle-left;
+}
+
+/* Conversation item */
+.conversation-item {
+    flex-direction: row;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    padding-left: 12px;
+    padding-right: 12px;
+    margin-bottom: 2px;
+}
+
+.conversation-item:hover {
+    background-color: rgba(77, 77, 77, 1);
+}
+
+/* Conversation title */
+.conversation-title {
+    font-size: 13px;
+    color: rgba(230, 230, 230, 1);
+    flex-grow: 1;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    -unity-text-align: middle-left;
+}
+
+/* Delete button */
+.delete-button {
+    font-size: 14px;
+    color: rgba(204, 102, 102, 1);
+    margin-left: 8px;
+}
+

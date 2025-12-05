@@ -1,0 +1,12 @@
+{
+  "name": "com.cfirz.unityagent",
+  "version": "1.0.0",
+  "displayName": "UnityAgent AI Plugin",
+  "unity": "6000.0",
+  "description": "AI agent integration (BYOK) for Unity editor.",
+  "author": { "name": "Cfir.z" },
+  "keywords": ["ai", "agent", "editor", "assistant"],
+  "dependencies": {
+    "com.unity.nuget.newtonsoft-json": "3.2.1"
+  }
+}

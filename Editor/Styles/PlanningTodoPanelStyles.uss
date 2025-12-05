@@ -1,0 +1,157 @@
+/* Planning Todo Panel Styles */
+
+/* Panel container - fixed at bottom, floats over content when expanded */
+.planning-todo-panel {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(40, 40, 40, 0.95);
+    border-top-width: 1px;
+    border-top-color: rgba(80, 80, 80, 1);
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    /* z-index not supported in Unity UI Toolkit - use element order instead */
+    transition: height 0.2s ease-out;
+}
+
+/* Collapsed state - uses relative positioning to not overlap content */
+.planning-todo-panel--collapsed {
+    position: relative;
+    bottom: auto;
+    left: auto;
+    right: auto;
+    /* z-index not supported in Unity UI Toolkit - removed */
+}
+
+.planning-todo-panel--collapsed .planning-todo-header {
+    margin-bottom: 0;
+}
+
+/* Header container */
+.planning-todo-header {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 4px;
+}
+
+/* Header left container (Progress, Status, Spinner) */
+.planning-todo-header-left {
+    flex-direction: row;
+    align-items: center;
+    flex-grow: 1;
+    overflow: hidden;
+}
+
+/* Progress label */
+.planning-todo-progress-label {
+    font-size: 12px;
+    color: rgba(230, 230, 230, 1);
+    -unity-text-align: middle-left;
+    white-space: nowrap;
+    flex-shrink: 0;
+    margin-right: 10px;
+}
+
+/* Status label */
+.planning-todo-status {
+    font-size: 11px;
+    color: rgba(100, 200, 255, 1); /* Light blue */
+    margin-right: 8px;
+    -unity-text-align: middle-left;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+/* Loading spinner */
+.planning-todo-spinner {
+    width: 12px;
+    height: 12px;
+    border-left-width: 2px;
+    border-right-width: 2px;
+    border-top-width: 2px;
+    border-bottom-width: 2px;
+    border-radius: 50%;
+    border-color: rgba(200, 200, 200, 0.3);
+    border-top-color: rgba(100, 200, 255, 1);
+    flex-shrink: 0;
+}
+
+/* Expand button */
+.planning-todo-expand-button {
+    width: 24px;
+    height: 20px;
+    min-width: 24px;
+    min-height: 20px;
+    padding-left: 0;
+    padding-right: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    font-size: 14px;
+    margin-left: 8px;
+    flex-shrink: 0;
+}
+
+/* Steps container */
+.planning-todo-steps {
+    flex-direction: column;
+    margin-top: 4px;
+    max-height: 300px;
+    overflow: scroll;
+}
+
+/* Individual step */
+.planning-todo-step {
+    flex-direction: row;
+    align-items: center;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    padding-left: 4px;
+    padding-right: 4px;
+    margin-bottom: 2px;
+}
+
+/* Step indicator (bullet, checkmark, etc.) */
+.planning-todo-step-indicator {
+    font-size: 12px;
+    width: 16px;
+    margin-right: 6px;
+    flex-shrink: 0;
+    -unity-text-align: middle-center;
+}
+
+/* Step description */
+.planning-todo-step-description {
+    font-size: 11px;
+    flex-grow: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -unity-text-align: middle-left;
+}
+
+/* Current step styling */
+.planning-todo-step--current {
+    background-color: rgba(60, 80, 100, 0.3);
+    border-left-width: 2px;
+    border-left-color: rgba(100, 150, 255, 1);
+    padding-left: 2px;
+}
+
+/* Completed step styling */
+.planning-todo-step--completed {
+    opacity: 0.8;
+}
+
+/* Failed step styling */
+.planning-todo-step--failed {
+    opacity: 0.9;
+}
+
+/* Skipped step styling */
+.planning-todo-step--skipped {
+    opacity: 0.6;
+}

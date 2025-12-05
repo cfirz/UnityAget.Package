@@ -1,0 +1,307 @@
+/* AIAssistantWindow Styles - Main Window Layout */
+
+/* Root container */
+.ai-assistant-window {
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    flex-direction: column;
+    flex-grow: 1;
+    background-color: rgba(26, 26, 26, 1);
+}
+
+/* Header container */
+.header-container {
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+/* New conversation button */
+.new-conversation-button {
+    width: 120px;
+}
+
+/* Conversation title */
+.conversation-title {
+    flex-grow: 1;
+    -unity-text-align: middle-center;
+}
+
+/* Right buttons container */
+.header-right-buttons {
+    flex-direction: row;
+}
+
+/* History button */
+.history-button {
+    width: 100px;
+    margin-right: 10px;
+}
+
+/* Settings button */
+.settings-button {
+    width: 30px;
+    height: 30px;
+    font-size: 16px;
+}
+
+/* Output header */
+.output-header {
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: 5px;
+    flex-shrink: 0;
+}
+
+/* Output label */
+.output-label {
+    margin-bottom: 0;
+}
+
+/* Apply changes output button */
+.apply-changes-output-button {
+    width: 120px;
+}
+
+/* Output container */
+.output-container {
+    flex-direction: column;
+    flex-grow: 1;
+    flex-shrink: 1;
+    flex-basis: 0;
+    min-height: 0;
+    margin-bottom: 0;
+}
+
+/* Message scroll view */
+.message-scroll-view {
+    flex-grow: 1;
+    flex-shrink: 1;
+    flex-basis: 0;
+    min-height: 0;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+/* Settings row - contains Mode, Context Detail, and Model */
+.settings-row {
+    flex-direction: row;
+    align-items: center;
+    margin-bottom: 5px;
+    flex-shrink: 0;
+}
+
+/* Consistent styling for all enum fields in settings row */
+.settings-enum-field {
+    align-self: center;
+}
+
+/* Mode container */
+.mode-container {
+    flex-shrink: 0;
+}
+
+/* Mode label */
+.mode-label {
+    margin-bottom: 0;
+}
+
+/* Context detail container */
+.context-detail-container {
+    flex-shrink: 0;
+}
+
+/* Context container */
+.context-container {
+    margin-bottom: 10px;
+    flex-shrink: 0;
+}
+
+/* Context row */
+.context-row {
+    flex-direction: row;
+}
+
+/* Context label */
+.context-label {
+    margin-right: 10px;
+}
+
+/* Selection container */
+.selection-container {
+    flex-direction: row;
+    margin-right: 10px;
+}
+
+/* Console container */
+.console-container {
+    flex-direction: row;
+}
+
+/* Model container */
+.model-container {
+    flex-shrink: 0;
+}
+
+/* Model row */
+.model-row {
+    flex-direction: row;
+}
+
+/* Model label field */
+.model-label-field {
+    width: 40px;
+}
+
+/* Model field */
+.model-field {
+    width: 150px;
+}
+
+/* Status container */
+.status-container {
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    flex-shrink: 0;
+}
+
+/* Status label */
+.status-label {
+    margin-bottom: 0;
+}
+
+/* Timer label */
+.timer-label {
+    margin-bottom: 0;
+    margin-left: 10px;
+    -unity-text-align: middle-right;
+}
+
+/* Button container */
+.button-container {
+    flex-direction: row;
+    margin-bottom: 7px;
+    margin-right: 5px;
+    flex-shrink: 0;
+}
+
+/* Suggest button */
+.suggest-button {
+    width: 100px;
+    height: 23px;
+    margin-bottom: 7px;
+    margin-right: 5px;
+}
+
+/* Cancel button */
+.cancel-button {
+    width: 100px;
+}
+
+/* Apply change button */
+.apply-change-button {
+    width: 120px;
+    margin-left: 10px;
+}
+
+/* Referenced files container */
+.referenced-files-container {
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin-bottom: 10px;
+    min-height: 30px;
+    flex-shrink: 0;
+}
+
+/* File tag container */
+.file-tag-container {
+    flex-direction: row;
+    align-items: center;
+    background-color: rgba(51, 51, 51, 1);
+    padding-left: 6px;
+    padding-right: 6px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    margin-right: 5px;
+    margin-bottom: 5px;
+    border-left-width: 1px;
+    border-right-width: 1px;
+    border-top-width: 1px;
+    border-bottom-width: 1px;
+    border-left-color: rgba(102, 102, 102, 1);
+    border-right-color: rgba(102, 102, 102, 1);
+    border-top-color: rgba(102, 102, 102, 1);
+    border-bottom-color: rgba(102, 102, 102, 1);
+}
+
+/* File tag icon */
+.file-tag-icon {
+    font-size: 12px;
+    margin-right: 4px;
+    color: rgba(179, 179, 179, 1);
+}
+
+/* File tag name */
+.file-tag-name {
+    font-size: 11px;
+    color: rgba(204, 204, 204, 1);
+}
+
+/* File tag remove button */
+.file-tag-remove-button {
+    width: 18px;
+    height: 18px;
+    margin-left: 6px;
+    padding-left: 0;
+    padding-right: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    font-size: 14px;
+    color: rgba(179, 179, 179, 1);
+    background-color: transparent;
+}
+
+/* Prompt container */
+.prompt-container {
+    margin-bottom: 10px;
+    flex-shrink: 0;
+    position: relative;
+}
+
+/* Prompt label */
+.prompt-label {
+    margin-bottom: 5px;
+}
+
+/* Prompt field */
+.prompt-field {
+    height: 120px;
+    margin-bottom: 5px;
+}
+
+/* Plan step action buttons container */
+.plan-step-action-buttons-container {
+    flex-direction: row;
+    align-items: center;
+    margin-left: 10px;
+}
+
+/* Plan step action button (up arrow, down arrow, delete) */
+.plan-step-action-button {
+    width: 36px;
+    height: 18px;
+    padding-left: 0;
+    padding-right: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    margin-right: 2px;
+    font-size: 12px;
+    min-width: 36px;
+    min-height: 18px;
+}
+

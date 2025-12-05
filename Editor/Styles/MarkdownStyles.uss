@@ -1,0 +1,111 @@
+/* Markdown paragraph styles */
+.markdown-paragraph {
+    margin-top: 4px;
+    margin-bottom: 8px;
+    white-space: normal;
+}
+
+.markdown-paragraph .unity-base-text-field__input {
+    --unity-selection-color: rgba(51, 102, 204, 0.5);
+    background-color: transparent;
+    border-top-width: 0;
+    border-bottom-width: 0;
+    border-left-width: 0;
+    border-right-width: 0;
+}
+
+/* Markdown heading styles */
+.markdown-heading--h1 .unity-base-text-field__input,
+.markdown-heading--h2 .unity-base-text-field__input,
+.markdown-heading--h3 .unity-base-text-field__input,
+.markdown-heading--h4 .unity-base-text-field__input,
+.markdown-heading--h5 .unity-base-text-field__input,
+.markdown-heading--h6 .unity-base-text-field__input {
+    --unity-selection-color: rgba(51, 102, 204, 0.5);
+    background-color: transparent;
+    border-top-width: 0;
+    border-bottom-width: 0;
+    border-left-width: 0;
+    border-right-width: 0;
+}
+
+.markdown-heading--h1 {
+    font-size: 20px;
+    -unity-font-style: bold;
+    margin-top: 12px;
+    margin-bottom: 8px;
+}
+
+.markdown-heading--h2 {
+    font-size: 18px;
+    -unity-font-style: bold;
+    margin-top: 10px;
+    margin-bottom: 6px;
+}
+
+.markdown-heading--h3 {
+    font-size: 16px;
+    -unity-font-style: bold;
+    margin-top: 8px;
+    margin-bottom: 4px;
+}
+
+.markdown-heading--h4 {
+    font-size: 15px;
+    -unity-font-style: bold;
+    margin-top: 6px;
+    margin-bottom: 4px;
+}
+
+.markdown-heading--h5 {
+    font-size: 14px;
+    -unity-font-style: bold;
+    margin-top: 6px;
+    margin-bottom: 4px;
+}
+
+.markdown-heading--h6 {
+    font-size: 13px;
+    -unity-font-style: bold;
+    margin-top: 6px;
+    margin-bottom: 4px;
+}
+
+/* Markdown list styles */
+.markdown-list--bullet {
+    flex-direction: column;
+    margin-top: 4px;
+    margin-bottom: 4px;
+    margin-left: 0px;
+}
+
+.markdown-list--ordered {
+    flex-direction: column;
+    margin-top: 4px;
+    margin-bottom: 4px;
+    margin-left: 0px;
+}
+
+.markdown-list-item {
+    flex-direction: row;
+    margin-bottom: 4px;
+}
+
+.markdown-list-bullet {
+    min-width: 16px;
+    margin-right: 8px;
+}
+
+.markdown-list-number {
+    min-width: 24px;
+    margin-right: 8px;
+}
+
+/* Markdown horizontal rule */
+.markdown-horizontal-rule {
+    height: 1px;
+    background-color: rgba(128, 128, 128, 0.5);
+    margin-top: 8px;
+    margin-bottom: 8px;
+}
+

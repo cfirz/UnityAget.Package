@@ -1,0 +1,188 @@
+/* Thinking Panel Styles */
+.thinking-panel {
+    background-color: rgba(40, 40, 40, 1);
+    border-top-width: 1px;
+    border-bottom-width: 1px;
+    border-left-width: 1px;
+    border-right-width: 1px;
+    border-top-color: rgba(60, 60, 60, 1);
+    border-bottom-color: rgba(60, 60, 60, 1);
+    border-left-color: rgba(60, 60, 60, 1);
+    border-right-color: rgba(60, 60, 60, 1);
+    border-radius: 4px;
+    padding: 8px;
+    margin-bottom: 8px;
+}
+
+.thinking-panel-header {
+    flex-direction: row;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.thinking-panel-title {
+    flex-grow: 1;
+    font-size: 12px;
+    -unity-font-style: bold;
+    color: rgba(200, 200, 200, 1);
+}
+
+.thinking-panel-expand-button {
+    width: 20px;
+    height: 20px;
+    padding: 0;
+    margin-left: 8px;
+}
+
+.thinking-panel-summary {
+    font-size: 11px;
+    color: rgba(150, 150, 150, 1);
+    margin-bottom: 4px;
+}
+
+.thinking-panel-progress {
+    height: 2px;
+    background-color: rgba(60, 60, 60, 1);
+    border-radius: 1px;
+    margin-bottom: 8px;
+    width: 100%;
+}
+
+.thinking-panel-steps {
+    flex-direction: column;
+}
+
+/* Thinking Step Styles */
+.thinking-step {
+    background-color: rgba(35, 35, 35, 1);
+    border-top-width: 1px;
+    border-bottom-width: 1px;
+    border-left-width: 1px;
+    border-right-width: 1px;
+    border-top-color: rgba(50, 50, 50, 1);
+    border-bottom-color: rgba(50, 50, 50, 1);
+    border-left-color: rgba(50, 50, 50, 1);
+    border-right-color: rgba(50, 50, 50, 1);
+    border-radius: 3px;
+    padding: 6px;
+    margin-bottom: 4px;
+}
+
+.thinking-step--pending {
+    opacity: 0.6;
+}
+
+.thinking-step--in-progress {
+    border-color: rgba(100, 150, 255, 1);
+}
+
+.thinking-step--completed {
+    border-color: rgba(100, 200, 100, 1);
+}
+
+.thinking-step--error {
+    border-color: rgba(255, 100, 100, 1);
+}
+
+.thinking-step-header {
+    flex-direction: row;
+    align-items: center;
+    margin-bottom: 4px;
+}
+
+.thinking-step-status-icon {
+    width: 16px;
+    height: 16px;
+    margin-right: 6px;
+    align-items: center;
+    justify-content: center;
+}
+
+.thinking-step-status-icon--in-progress {
+    background-color: rgba(100, 150, 255, 0.3);
+    border-radius: 50%;
+    /* animation not supported in Unity UI Toolkit - use C# code for rotation instead */
+}
+
+/* @keyframes not supported in Unity UI Toolkit - removed */
+
+.thinking-step-status-icon--completed {
+    color: rgba(100, 200, 100, 1);
+}
+
+.thinking-step-status-icon--error {
+    color: rgba(255, 100, 100, 1);
+}
+
+.thinking-step-title {
+    flex-grow: 1;
+    font-size: 11px;
+    -unity-font-style: bold;
+    color: rgba(200, 200, 200, 1);
+}
+
+.thinking-step-duration {
+    font-size: 10px;
+    color: rgba(150, 150, 150, 1);
+    margin-left: 8px;
+}
+
+.thinking-step-details {
+    font-size: 10px;
+    color: rgba(180, 180, 180, 1);
+    margin-top: 4px;
+    margin-left: 22px;
+}
+
+.thinking-step-files {
+    margin-top: 4px;
+    margin-left: 22px;
+}
+
+.thinking-step-files-header {
+    font-size: 10px;
+    -unity-font-style: bold;
+    color: rgba(160, 160, 160, 1);
+    margin-bottom: 2px;
+}
+
+.thinking-step-file-item {
+    font-size: 10px;
+    color: rgba(150, 150, 200, 1);
+    margin-left: 8px;
+    margin-bottom: 2px;
+}
+
+.thinking-step-dependencies {
+    margin-top: 4px;
+    margin-left: 22px;
+}
+
+.thinking-step-dependencies-header {
+    font-size: 10px;
+    -unity-font-style: bold;
+    color: rgba(160, 160, 160, 1);
+    margin-bottom: 2px;
+}
+
+.thinking-step-dependency-item {
+    font-size: 10px;
+    color: rgba(200, 150, 150, 1);
+    margin-left: 8px;
+    margin-bottom: 2px;
+}
+
+.thinking-step-progress-container {
+    height: 2px;
+    background-color: rgba(50, 50, 50, 1);
+    border-radius: 1px;
+    margin-top: 4px;
+    margin-left: 22px;
+}
+
+.thinking-step-progress-bar {
+    height: 100%;
+    background-color: rgba(100, 150, 255, 1);
+    border-radius: 1px;
+}
+

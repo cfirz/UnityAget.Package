@@ -17,31 +17,34 @@ AI-powered code assistant for Unity Editor. Get intelligent code suggestions, re
 ## Requirements
 
 - **Unity 6 or above**
-- **API Keys**: Your own API keys from OpenAI or Anthropic (BYOK - Bring Your Own Key)
-- **Proxy Server**: AWS Lambda proxy endpoint (see Setup below)
-  - **Note**: Proxy not required when using Local LLM provider
+- **Local Env**:
+  - **LM Studio**: Install LM Studio with your prefered model loaded
+- **External APIs**:
+  - **API Keys**: Your own API keys from OpenAI or Anthropic (BYOK - Bring Your Own Key)
+  - **Proxy Server**: AWS Lambda proxy endpoint (see Setup guide below)
+  
 
 ## Installation
 
 ### From Unity Asset Store
 1. Download the package from the Unity Asset Store
 2. Import the `.unitypackage` into your Unity project
-3. The plugin will appear in `Window > AI Suggestions`
+3. The plugin will appear in `Window > AI Assistant`
 
 ### From Unity Package Manager (UPM)
 1. Add the package via Git URL or scoped registry
-2. The plugin will appear in `Window > AI Suggestions`
+2. The plugin will appear in `Window > AI Assistant`
 
 ## Quick Setup
 
 ### Step 1: Configure API Keys
 
-1. Open `Window > AI Suggestions`
+1. Open `Window > AI Assistant`
 2. Click the **⚙ Settings** button (top-right)
 3. Enter your API keys:
    - **OpenAI API Key**: For GPT models (starts with `sk-`)
    - **Claude API Key**: For Claude models (starts with `sk-ant-`)
-   - **Local LLM**: Configure if using LM Studio (no API key needed)
+   - **Local LLM**: Configure if using LM Studio (no API key needed, only the loaded model name)
 
 API keys are stored locally and never shared.
 
@@ -50,7 +53,9 @@ API keys are stored locally and never shared.
 The plugin requires a proxy server to communicate with OpenAI/Claude APIs securely.
 
 **Option A: Deploy Your Own (Recommended)**
-- See `proxy/README.md` for AWS Lambda deployment instructions
+- See `Proxy/PROXY_SETUP_GUIDE.md` in the package for AWS Lambda deployment instructions
+- See `Proxy/LAMBDA_TESTING_GUIDE.md` in the package for Lambda testing
+- The proxy Lambda function code is available at `Proxy/lambda_function.py`
 - Copy the endpoint URL after deployment
 
 **Option B: Use Existing Proxy**
@@ -58,9 +63,11 @@ The plugin requires a proxy server to communicate with OpenAI/Claude APIs secure
 
 **Note**: Local LLM provider connects directly to `localhost` - no proxy needed.
 
+**Finding Proxy Files**: After installing the package, the proxy setup guides and Lambda function code are located in the `Proxy/` folder at the package root (e.g., `Packages/com.cfirz.unityagent/Proxy/` for UPM packages, or `Assets/UnityAgent/Proxy/` for .unitypackage imports).
+
 ### Step 3: Configure Proxy URL
 
-1. In the AI Suggestions window, enter your proxy URL
+1. In the AI Assistant window, enter your proxy URL
 2. Or set it in Settings: `⚙ Settings > Proxy URL`
 
 ### Step 4: Start Using!
@@ -92,7 +99,7 @@ Break down complex tasks:
 
 ### Using Code Selection
 1. Select code in a Unity script editor
-2. Open AI Suggestions window
+2. Open AI Assistant window
 3. Enable "Selected Code" and "Surrounding Lines" options
 4. Ask your question - the AI will have full context
 
@@ -189,7 +196,7 @@ Choose how much code context to include:
 
 For issues or questions:
 1. Check the Troubleshooting section above
-2. Review proxy setup documentation in `proxy/README.md`
+2. Review proxy setup documentation in `Proxy/PROXY_SETUP_GUIDE.md` and `Proxy/LAMBDA_TESTING_GUIDE.md`
 3. Verify Unity version compatibility (6.2+)
 
 ## License

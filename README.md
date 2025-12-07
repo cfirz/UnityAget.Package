@@ -1,7 +1,7 @@
 # UnityAgent AI Plugin
 
 AI-powered code assistant for Unity Editor. Get intelligent code suggestions, refactoring help, and automated code generation directly in Unity.
-<img width="420" height="281" alt="card_small" src="https://github.com/user-attachments/assets/8bccb865-364f-45de-b74b-1c21f5508a8e" />
+<img width="2528" height="1696" alt="card" src="https://github.com/user-attachments/assets/cc3cf363-ad5d-4b4b-8834-9307de472a3d" />
 
 ## Features
 

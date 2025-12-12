@@ -74,7 +74,7 @@
     flex-shrink: 1;
     flex-basis: 0;
     min-height: 0;
-    margin-bottom: 0;
+    margin-bottom: 12px;
 }
 
 /* Message scroll view */
@@ -289,6 +289,128 @@
     flex-direction: row;
     align-items: center;
     margin-left: 10px;
+}
+
+.plan-step-action-buttons-container--organize {
+    margin-left: auto;
+    flex-shrink: 0;
+}
+
+/* Execution plan (PlanEditorUI) */
+.plan-root {
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.plan-header-container {
+    flex-direction: row;
+    align-items: center;
+    margin-bottom: 6px;
+}
+
+.plan-status-label {
+    margin-bottom: 6px;
+    font-size: 11px;
+    color: rgba(200, 200, 200, 1);
+}
+
+.plan-title {
+    font-size: 12px;
+    color: rgba(230, 230, 230, 1);
+}
+
+.plan-steps-container {
+    flex-grow: 1;
+    margin-bottom: 6px;
+}
+
+.plan-button-container {
+    flex-direction: row;
+    flex-shrink: 0;
+}
+
+.plan-cancel-button {
+    flex-grow: 1;
+    margin-right: 6px;
+}
+
+.plan-button-container--bottom {
+    margin-top: 4px;
+}
+
+.plan-regenerate-button {
+    flex-grow: 1;
+    margin-right: 6px;
+}
+
+.plan-approve-button {
+    flex-grow: 1;
+}
+
+.plan-step-container--row {
+    flex-direction: row;
+    align-items: center;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    min-width: 0;
+}
+
+.plan-step-status-icon {
+    width: 16px;
+    margin-right: 8px;
+    font-size: 14px;
+    color: rgba(179, 179, 179, 1);
+}
+
+.plan-step-status-icon--completed { color: rgba(120, 220, 120, 1); }
+.plan-step-status-icon--in-progress { color: rgba(240, 210, 120, 1); }
+.plan-step-status-icon--failed { color: rgba(240, 120, 120, 1); }
+.plan-step-status-icon--skipped { color: rgba(179, 179, 179, 1); }
+.plan-step-status-icon--pending { color: rgba(179, 179, 179, 1); }
+.plan-step-status-icon--pending-changes { color: rgba(210, 210, 140, 1); }
+.plan-step-status-icon--waiting { color: rgba(255, 213, 110, 1); font-weight: 700; }
+
+.plan-step-spinner {
+    width: 14px;
+    height: 14px;
+    border-left-width: 2px;
+    border-right-width: 2px;
+    border-top-width: 2px;
+    border-bottom-width: 2px;
+    border-radius: 50%;
+    border-color: rgba(200, 200, 200, 0.25);
+    border-top-color: rgba(120, 200, 255, 1);
+    flex-shrink: 0;
+}
+
+.plan-step-number {
+    margin-right: 8px;
+    font-size: 12px;
+    color: rgba(230, 230, 230, 1);
+    flex-shrink: 0;
+}
+
+.plan-step-description-label {
+    flex-grow: 1;
+    min-width: 0;
+    font-size: 12px;
+    color: rgba(204, 204, 204, 1);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.plan-step-description-field {
+    flex-grow: 1;
+    min-width: 0;
+    font-size: 12px;
+    margin-right: 8px;
+}
+
+.plan-step-description-field .unity-base-text-field__input {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 /* Plan step action button (up arrow, down arrow, delete) */

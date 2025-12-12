@@ -4,7 +4,8 @@
     "references": [
         "Unity.Editor",
         "Unity.UIElements",
-        "Newtonsoft.Json"
+        "Newtonsoft.Json",
+        "UnityEngine.UI"
     ],
     "includePlatforms": [
         "Editor"

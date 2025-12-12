@@ -2,7 +2,7 @@
 
 A powerful AI assistant integrated directly into the Unity Editor to help you write code, answer questions, and generate ideas without leaving Unity.
 
-![AI Assistant Preview](Docs/images/preview.png)
+<img width="2528" height="1696" alt="card" src="https://github.com/user-attachments/assets/cc3cf363-ad5d-4b4b-8834-9307de472a3d" />
 
 ## Features
 

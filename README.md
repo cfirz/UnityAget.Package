@@ -34,6 +34,8 @@ A powerful AI assistant integrated directly into the Unity Editor to help you wr
 2. Open Unity Editor.
 3. Go to `Window > AI Assistant` to open the window.
 
+**UPM (Git URL) note**: Git-based UPM installs are treated as *immutable* by Unity. Your UPM package must include `.meta` files (including folder metas and `package.json.meta`), otherwise Unity will log errors like `... has no meta file, but it's in an immutable folder. The asset will be ignored.`
+
 ## Configuration
 
 ### API Keys

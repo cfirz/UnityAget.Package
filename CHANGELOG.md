@@ -5,6 +5,26 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.26.0] - 2026-01-10
+
+### Added
+- **⚠️ Lambda update required (existing proxy users)**: If you use the included AWS Lambda proxy, you must redeploy/update your deployed `Assets/Proxy/lambda_function.py` to this version to keep OpenAI requests working correctly (Responses API routing + request/response shaping).
+- **OpenAI Responses API support (proxy + client parsing)**: The included Lambda proxy now routes OpenAI requests via the Responses API, and the Unity client can parse both streaming and non-streaming Responses formats.
+- **Expanded model catalog**: Added support for newer OpenAI/Anthropic model IDs (including GPT-5 family, GPT-4.1 family, o3 family, and Claude Opus 4 / 4.1).
+- **Model capability shaping**: Requests are now shaped per provider/model (token limit field selection, temperature support, structured output support, and conservative output ceilings).
+- **Reasoning controls in Settings**:
+  - **Reasoning Effort** for OpenAI o-series models (low/medium/high)
+  - **Thinking Budget** (tokens) for Claude extended thinking models
+- **Testability improvements**: Added `IProxyClient` + `MockProxyClient` so StepExecutor tests can run without real network calls or API keys.
+
+### Changed
+- **Token limit handling**: OpenAI requests prefer `max_output_tokens` (Responses API), and agent-mode output caps are no longer universally clamped to 4096 (now capped per model capability).
+- **Settings/model persistence**: Model selection and provider inference are now provider-aware (including Local model round-trip), reducing config drift across reloads.
+
+### Fixed
+- **Agent JSON extraction**: Improved `AIAgentParser` JSON extraction so validation produces clearer errors (e.g., missing required fields) and JSON-in-code-block cases parse more reliably.
+- **Test runner stability**: Avoids writing API key files / refreshing `AssetDatabase` in test runs; StepExecutor tests avoid deadlocks and hanging by using proper async patterns and mocks.
+
 ## [1.25.0] - 2025-12-12
 
 ### Added

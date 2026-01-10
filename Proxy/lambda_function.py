@@ -1,15 +1,124 @@
 """
 AWS Lambda function for Unity AI Suggestions proxy.
-Minimal pass-through proxy that verifies Authorization header and relays requests to OpenAI.
-No monitoring, rate limiting, or token tracking - pure mediator.
+Routes requests to OpenAI (Responses API) or Anthropic (Messages API) and performs light request-shaping:
+- Extracts system instructions for OpenAI Responses
+- Translates token limit fields (max_output_tokens vs max_tokens)
+- Buffers streaming responses for API Gateway compatibility
 """
 
 import json
 import os
 import re
-from typing import Dict, Any
+from typing import Dict, Any, Tuple, List, Optional
 import urllib.request
 import urllib.parse
+
+def _extract_system_instructions_and_non_system_messages(request_data: Dict[str, Any]) -> Tuple[Optional[str], List[Dict[str, Any]]]:
+    """
+    For OpenAI Responses API:
+    - system instructions should be top-level 'instructions'
+    - non-system messages become 'input' items
+
+    We support both:
+    - request_data['system'] (preferred from Unity client)
+    - any messages with role == 'system' (backward compatibility)
+    """
+    instructions_parts = []
+
+    system_field = request_data.get('system')
+    if isinstance(system_field, str) and system_field.strip():
+        instructions_parts.append(system_field.strip())
+
+    non_system: List[Dict[str, Any]] = []
+    for msg in request_data.get('messages', []) or []:
+        role = (msg.get('role') or '').strip().lower()
+        content = msg.get('content', '')
+        if role == 'system':
+            if isinstance(content, str) and content.strip():
+                instructions_parts.append(content.strip())
+            continue
+        non_system.append(msg)
+
+    instructions = "\n\n".join([p for p in instructions_parts if p])
+    return (instructions if instructions else None), non_system
+
+def _openai_messages_to_responses_input(messages: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+    """
+    Convert chat-completions style messages into Responses API 'input' items.
+    This uses the canonical content-part format for compatibility.
+    """
+    items: List[Dict[str, Any]] = []
+    for msg in messages or []:
+        role = (msg.get('role') or '').strip().lower() or 'user'
+        content = msg.get('content', '')
+        if content is None:
+            content = ""
+        if not isinstance(content, str):
+            content = str(content)
+
+        # Use content parts; keep roles to preserve conversation shape.
+        # For Responses API, 'input' should use input_* parts even for assistant history items.
+        part_type = 'input_text'
+
+        items.append({
+            'role': role,
+            'content': [
+                {'type': part_type, 'text': content}
+            ]
+        })
+    return items
+
+def _safe_len(x: Any) -> int:
+    try:
+        return len(x)
+    except Exception:
+        return 0
+
+def _log_request_summary(provider_name: str, api_request: Dict[str, Any], is_streaming_request: bool) -> None:
+    model = api_request.get('model', '')
+    if provider_name == 'Claude':
+        msg_count = _safe_len(api_request.get('messages', []))
+        print(f"[Lambda] Request to Claude - stream: {is_streaming_request}, model: {model}, messages: {msg_count}")
+        return
+
+    # OpenAI Responses: log using 'input' (not 'messages').
+    input_items = api_request.get('input', [])
+    input_count = _safe_len(input_items) if isinstance(input_items, list) else 0
+    print(f"[Lambda] Request to OpenAI - stream: {is_streaming_request}, model: {model}, input_items: {input_count}")
+
+def _log_user_message_sizes(provider_name: str, api_request: Dict[str, Any]) -> None:
+    """
+    Best-effort logging of user message text sizes without assuming a specific schema.
+    """
+    if provider_name == 'Claude':
+        for i, msg in enumerate(api_request.get('messages', []) or []):
+            if msg.get('role') == 'user':
+                content_length = len(msg.get('content', '') or '')
+                print(f"[Lambda] User message {i+1} content length: {content_length} chars")
+        return
+
+    # OpenAI Responses: iterate 'input' items and sum text lengths from content parts.
+    input_items = api_request.get('input', []) or []
+    if not isinstance(input_items, list):
+        return
+
+    user_idx = 0
+    for item in input_items:
+        if not isinstance(item, dict):
+            continue
+        if (item.get('role') or '').strip().lower() != 'user':
+            continue
+
+        user_idx += 1
+        parts = item.get('content', [])
+        total = 0
+        if isinstance(parts, list):
+            for part in parts:
+                if isinstance(part, dict):
+                    total += len(part.get('text', '') or '')
+        else:
+            total = len(str(parts))
+        print(f"[Lambda] User input item {user_idx} content length: {total} chars")
 
 def normalize_event(event: Dict[str, Any]) -> Dict[str, Any]:
     """
@@ -184,7 +293,8 @@ def lambda_handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
         if provider == 'Claude':
             api_url = 'https://api.anthropic.com/v1/messages'
         else:
-            api_url = 'https://api.openai.com/v1/chat/completions'
+            # OpenAI: migrate to Responses API
+            api_url = 'https://api.openai.com/v1/responses'
         
         # Prepare request based on provider
         is_streaming_request = request_data.get('stream', True)
@@ -227,47 +337,41 @@ def lambda_handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
                 'User-Agent': 'Unity-AI-Assistant/1.0 (AWS Lambda)'
             }
             
-            print(f"[Lambda] Request to Claude - stream: {is_streaming_request}, model: {api_request['model']}, messages: {len(api_request['messages'])}")
+            _log_request_summary(provider, api_request, is_streaming_request)
         else:
-            # OpenAI API format
-            # Check if model requires max_completion_tokens instead of max_tokens
-            requires_max_completion_tokens = (
-                model_name.startswith('gpt-5') or 
-                model_name.startswith('gpt-6') or
-                model_name.startswith('o1') or
-                model_name.startswith('o3')
-            )
-            
-            # GPT-5 models don't support custom temperature (only default value of 1)
-            is_gpt5_model = model_name.startswith('gpt-5')
-            
+            # OpenAI Responses API format
+            instructions, non_system_messages = _extract_system_instructions_and_non_system_messages(request_data)
+
             openai_request = {
                 'model': model_name,
-                'messages': request_data.get('messages', []),
+                'input': _openai_messages_to_responses_input(non_system_messages),
                 'stream': is_streaming_request
             }
-            
-            # Only add temperature for non-GPT-5 models
-            if not is_gpt5_model:
-                openai_request['temperature'] = request_data.get('temperature', 0.7)
-            
-            # Set the appropriate token limit parameter based on model
-            if requires_max_completion_tokens:
-                # GPT-5+ models use max_completion_tokens
-                max_completion_tokens = (
-                    request_data.get('max_completion_tokens') or 
-                    request_data.get('max_output_tokens') or 
-                    2000
-                )
-                openai_request['max_completion_tokens'] = max_completion_tokens
-            else:
-                # Older models use max_tokens
-                max_tokens = (
-                    request_data.get('max_output_tokens') or 
-                    request_data.get('max_tokens') or 
-                    2000
-                )
-                openai_request['max_tokens'] = max_tokens
+
+            if instructions:
+                openai_request['instructions'] = instructions
+
+            # Temperature is best-effort. Unity omits it when unsupported.
+            if request_data.get('temperature') is not None:
+                openai_request['temperature'] = request_data.get('temperature')
+
+            # Use max_output_tokens for Responses API (fallback to other fields for backward compatibility).
+            max_output_tokens = (
+                request_data.get('max_output_tokens') or
+                request_data.get('max_completion_tokens') or
+                request_data.get('max_tokens') or
+                2000
+            )
+            openai_request['max_output_tokens'] = max_output_tokens
+
+            # Structured output (agent mode): pass through if present.
+            if isinstance(request_data.get('response_format'), dict):
+                openai_request['response_format'] = request_data.get('response_format')
+
+            # Optional reasoning controls (best-effort).
+            reasoning_effort = request_data.get('reasoning_effort')
+            if isinstance(reasoning_effort, str) and reasoning_effort.strip():
+                openai_request['reasoning'] = {'effort': reasoning_effort.strip()}
             
             api_request = openai_request
             req_data_json = json.dumps(api_request)
@@ -280,16 +384,13 @@ def lambda_handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
                 'User-Agent': 'Unity-AI-Assistant/1.0 (AWS Lambda)'
             }
             
-            print(f"[Lambda] Request to OpenAI - stream: {is_streaming_request}, model: {api_request['model']}, messages: {len(api_request['messages'])}")
+            _log_request_summary(provider, api_request, is_streaming_request)
         
         # Calculate total request size for logging
         print(f"[Lambda] Request size: {len(req_data)} bytes, JSON length: {len(req_data_json)} chars")
         
         # Log user message size if present
-        for i, msg in enumerate(api_request.get('messages', [])):
-            if msg.get('role') == 'user':
-                content_length = len(msg.get('content', ''))
-                print(f"[Lambda] User message {i+1} content length: {content_length} chars")
+        _log_user_message_sizes(provider, api_request)
         
         # Create HTTP request
         req = urllib.request.Request(

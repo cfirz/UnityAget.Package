@@ -1,4 +1,4 @@
-# Unity AI Assistant
+# Unity AI Editor Agent
 
 A powerful AI assistant integrated directly into the Unity Editor to help you write code, answer questions, and generate ideas without leaving Unity.
 
@@ -20,9 +20,9 @@ A powerful AI assistant integrated directly into the Unity Editor to help you wr
   - **Smart Context**: Includes relevant files, console logs, and selected objects in the prompt
   - **Semantic Search**: (Coming soon) Find relevant code by meaning
 - **Multi-Provider Support**:
-  - **OpenAI**: Support for GPT-4o, GPT-4 Turbo, and GPT-3.5 Turbo
-  - **Anthropic**: Support for Claude 3.5 Sonnet, Opus, and Haiku
-  - **Local LLMs**: Connect to local models via LM Studio
+  - **OpenAI**: Support for GPT-5 family, GPT-4.1 family, GPT-4o family, and o-series reasoning models (o1/o3)
+  - **Anthropic**: Support for Claude Sonnet/Opus/Haiku (including Opus 4 / 4.1 IDs)
+  - **Local LLMs**: Connect to OpenAI-compatible local servers via LM Studio
 - **Developer Experience**:
   - **Markdown Support**: Rich text formatting for clearer explanations
   - **Code Highlighting**: Syntax highlighting for code blocks
@@ -40,6 +40,10 @@ A powerful AI assistant integrated directly into the Unity Editor to help you wr
 1. Click the settings icon (⚙) in the AI Assistant window header.
 2. Enter your OpenAI or Anthropic API keys.
 3. (Optional) Configure Local LLM settings if using LM Studio.
+
+### Reasoning Controls (Optional)
+- **OpenAI o-series**: Set **Reasoning Effort** (low/medium/high) to control reasoning depth.
+- **Claude**: Set **Thinking Budget (tokens)** to request extended thinking (0 = use provider default).
 
 ### Modes
 - **Chat Mode**: Standard conversational interface for Q&A and code generation.

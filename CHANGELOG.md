@@ -7,6 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+- **EmbeddingService JSON serialization**: Fixed JSON serialization errors after code obfuscation that caused "A member with the name '' already exists" errors when opening the AI Assistant window in a clean project
+  - Request body is now built manually to avoid obfuscation issues with anonymous types
+  - Added obfuscation rules to skip all JSON-related classes (Message, SuggestRequest, ResponseFormat, etc.)
+- **OpenAI Responses API compatibility**: Removed unsupported `response_format` parameter from Responses API requests
+  - OpenAI's Responses API doesn't support the `response_format` parameter that was previously used for structured outputs
+  - The proxy now relies on instructions to request JSON format instead
+
+### Changed
+- **Lambda proxy update recommended**: If using the AWS Lambda proxy, redeploy `Assets/Proxy/lambda_function.py` to prevent "Unsupported parameter: 'response_format'" errors with OpenAI
+
 ## [1.27.0] - 2026-01-14
 
 ### Added

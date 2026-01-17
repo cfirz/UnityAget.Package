@@ -1,6 +1,6 @@
 {
   "name": "com.cfirz.unityagent",
-  "version": "1.27.1",
+  "version": "1.27.2",
   "displayName": "UnityAgent AI Plugin",
   "unity": "6000.0",
   "description": "AI agent integration (BYOK) for Unity editor.",

@@ -364,9 +364,10 @@ def lambda_handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
             )
             openai_request['max_output_tokens'] = max_output_tokens
 
-            # Structured output (agent mode): pass through if present.
-            if isinstance(request_data.get('response_format'), dict):
-                openai_request['response_format'] = request_data.get('response_format')
+            # Structured output (agent mode): Responses API doesn't support response_format.
+            # The Unity client may send it for compatibility, but we skip it for Responses API.
+            # If needed in the future, OpenAI may add support via text.format or output fields.
+            # For now, we rely on instructions to request JSON format.
 
             # Optional reasoning controls (best-effort).
             reasoning_effort = request_data.get('reasoning_effort')

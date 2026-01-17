@@ -5,6 +5,45 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+## [1.27.0] - 2026-01-14
+
+### Added
+- **GameObject rename support**: `modify_gameobject` command now supports renaming GameObjects via the `new_name` field in `EditorCommandData`
+- **Scene operation error detection**: New error type classification for scene operations (GameObject/Component/Property not found)
+- **Intelligent error messages**: Error messages now include suggestions for similar names and common mistakes
+  - GameObject not found errors suggest similar names in the scene
+  - Component errors suggest correct component name casing (e.g., "Transform" not "transform")
+  - Property errors list available properties and provide Transform-specific guidance
+
+### Changed
+- **Retry logic for scene operations**: Scene operations now allow more retry attempts (up to MaxRetries + 1) before stopping
+- **Error guidance**: Enhanced retry prompts with actionable guidance for scene operation errors
+  - GameObject name mismatch detection (case-sensitivity, renamed objects)
+  - Component type verification (correct casing, common components)
+  - Property path correction (lowercase for Transform properties, dot notation)
+  - Value format validation (Vector3, Color structures)
+- **Logging improvements**: Detailed command execution logs include command type, target name, step number, and retry attempt
+
+### Fixed
+- **Scene operation retry logic**: Fixed issue where scene manipulation steps would fail prematurely with "Same error type 'unknown' repeating, stopping retries" warning
+  - Scene operation errors are now properly classified instead of falling to "unknown" error type
+  - LLM receives specific guidance to correct scene operation mistakes on retry
+- **Execution loop warning**: Suppressed harmless warning "Cannot execute step in state: Completed" that appeared at the end of successful multi-step executions
+
+## [1.26.1] - 2026-01-10
+
+### Fixed
+- **UPM (Git URL) installs**: Package builds now include (or generate) required `.meta` files so Unity doesn’t ignore assets in immutable Git-based UPM installs.
+- **Package contents**: Build cleanup now removes generated `package.json.meta`, `README.md.meta`, and `CHANGELOG.md(.meta)` between builds to avoid stale artifacts.
+
+### Changed
+- **UPM build output**: `CHANGELOG.md` is now copied into the built UPM package alongside `README.md`.
+- **Git ignore**: Keeps `Packages/**/*.meta` tracked so Git-based UPM installs can import packages without missing metas.
+- **Package template version**: Updated `Assets/Editor/Build/Templates/package.json` to `1.26.1`.
+- **Repo cleanup**: Removed stale `Assets/Scripts.meta`.
+
 ## [1.26.0] - 2026-01-10
 
 ### Added

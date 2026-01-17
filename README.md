@@ -43,6 +43,14 @@ A powerful AI assistant integrated directly into the Unity Editor to help you wr
 2. Enter your OpenAI or Anthropic API keys.
 3. (Optional) Configure Local LLM settings if using LM Studio.
 
+### Proxy (Optional - AWS Lambda)
+If you use the included AWS Lambda proxy (`Assets/Proxy/`):
+
+- **Important**: When updating the plugin, redeploy your Lambda using the latest `Assets/Proxy/lambda_function.py` (OpenAI requests are routed via the **OpenAI Responses API**, and the request/response shaping lives in the Lambda).
+- **Setup / testing guides**:
+  - `Assets/Proxy/PROXY_SETUP_GUIDE.md`
+  - `Assets/Proxy/LAMBDA_TESTING_GUIDE.md`
+
 ### Reasoning Controls (Optional)
 - **OpenAI o-series**: Set **Reasoning Effort** (low/medium/high) to control reasoning depth.
 - **Claude**: Set **Thinking Budget (tokens)** to request extended thinking (0 = use provider default).
@@ -53,6 +61,10 @@ A powerful AI assistant integrated directly into the Unity Editor to help you wr
 - **Multi-Step Mode**: Planning-based execution for complex tasks.
   - Use the **Auto Confirmation** toggle to switch between **Manual** (off) and **Auto** (on) execution.
   - In **Manual** mode, the plan UI and Pending Changes panel will surface generated file changes so you can **Approve** or **Discard** before execution continues.
+
+## Testing (Contributors)
+- **Run StepExecutor tests**: `.\run_tests.ps1 -TestFilter "StepExecutorTests"`
+- **Note**: Step execution tests use `IProxyClient` + `MockProxyClient` to avoid real network calls / API keys.
 
 ## Agent Mode Capabilities
 

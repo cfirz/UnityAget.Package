@@ -1,0 +1,14 @@
+# Unity Package files (not needed for UPM distribution)
+*.unitypackage
+
+# Build artifacts
+*.dll.mdb
+*.pdb
+
+# User data directories (should be created in user's project)
+Editor/Config/
+Editor/Rules/
+
+# Assembly definition (conflicts with DLL)
+Editor/*.asmdef
+Editor/*.asmdef.meta

@@ -11,10 +11,20 @@ A powerful AI assistant integrated directly into the Unity Editor to help you wr
   - **Code Editing**: Intelligently edit existing scripts with full context
   - **File Management**: Create, delete, and modify files automatically
   - **Scene Operations**: Create and modify GameObjects, add components, and create assets (Materials)
+    - **Robust targeting**: Works with inactive objects and supports full hierarchy paths (e.g., `Parent/Child/ObjectName`) to disambiguate names
+    - **Active scene preference**: Resolves names in the active scene before other loaded scenes to avoid collisions
+    - **Interactive resolution**: If an object isn’t found, the agent can suggest candidates from the scene and ask you to confirm the correct one
+    - **Persistence**: Scene modifications mark the scene dirty so changes persist after save/reload
+    - **Apply materials**: Apply an existing Material asset to a GameObject’s Renderer via `apply_material`
+      - Supports multi-material renderers via optional `material_index` (0-based). If omitted, applies to all slots.
+      - Materials can be resolved by `material_path`, `material_name`, or derived names from the GameObject (e.g., `NameMaterial`, `Name_Material`, `Name`).
 - **Multi-Step Execution**: Plan and execute complex tasks with multiple steps
   - **Manual confirmation**: Review plan + approve generated changes before applying them
   - **Auto confirmation**: Auto-approve and execute plans for faster iteration
+  - **Optimized planning**: Large tasks are bundled into fewer external steps (up to 10), and each step can include multiple internal actions
+  - **Internal progress**: When a step contains multiple actions, the output shows per-action progress (e.g., `Internal step i/N: ...`)
   - **Domain reload resilience**: Execution can resume after Unity recompiles scripts / reloads the domain
+  - **Retry resilience**: Timeouts are classified for retry backoff, and scene operations allow an extra retry attempt before stopping
 - **Context Awareness**:
   - **Project Knowledge Base**: Automatically scans and understands your project structure
   - **Smart Context**: Includes relevant files, console logs, and selected objects in the prompt
@@ -27,6 +37,7 @@ A powerful AI assistant integrated directly into the Unity Editor to help you wr
   - **Markdown Support**: Rich text formatting for clearer explanations
   - **Code Highlighting**: Syntax highlighting for code blocks
   - **Execution Transcripts**: Detailed logs of all AI actions
+  - **LLM request/response logging**: Proxy logs request metadata and collected responses for debugging
 
 ## Installation
 

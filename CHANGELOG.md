@@ -7,16 +7,68 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.31.0] - 2026-01-18
+
+### Added
+- **LLM request/response logging**: Proxy requests now log request metadata and collected response content to make provider debugging easier.
+- **Material persistence docs**: Added troubleshooting and testing notes for the material application fix.
+
+### Changed
+- **Scene object lookup preference**: GameObject resolution now prefers matches in the active scene before other loaded scenes to reduce cross-scene collisions.
+- **Step execution logs**: Step execution now logs the selected provider/model and retry attempt count; non-cancellation LLM errors log as warnings.
+- **Scene operation retries**: Scene operations allow one extra retry beyond `MaxRetries` before stopping.
+
 ### Fixed
+- **Scene changes persist**: Scene-modifying operations now mark scenes dirty after changes so create/modify/delete/set_active/instantiate/apply_material persist after save/reload.
+- **Timeout detection**: "Timed out" errors are now classified as connection issues so retries use the correct backoff.
+
+## [1.30.0] - 2026-01-18
+
+### Added
+- **Optimized plan sizing (Multi-Step)**: Plan validation and plan-generation instructions now share a single max-step limit (`MaxPlanSteps`), and the planner is guided to bundle related work into fewer external steps.
+- **Multi-action step execution**: Step execution now supports returning an `actions[]` array (or a single action for backward compatibility) so one external step can perform multiple internal actions sequentially.
+- **Internal progress messages**: Multi-action steps now emit progress updates in the output (e.g., `Internal step i/N: <action>...`) as each internal action runs.
+- **Expanded editor test coverage**: Added integration/unit tests for multi-action parsing/execution, retry strategy behavior, object resolution flows, and internal-action label caching.
+
+### Changed
+- **Step execution maintainability**: Refactored `StepExecutor` into focused helpers (retry strategy, action labeling, object resolution, compilation fix loop, and shared timeout handling) while keeping the orchestration behavior consistent.
+
+### Fixed
+- **More actionable resolution errors**: Improved warnings when object-resolution LLM responses can’t be parsed by including a (truncated) response snippet for debugging.
+- **Consistent timeout handling**: Unified timeout behavior and logging across step execution and compilation-fix requests.
+
+## [1.29.0] - 2026-01-18
+
+### Added
+- **Multi-material support for `apply_material`**: Added optional `material_index` (0-based) to select a specific renderer material slot. If omitted, the material is applied to all slots.
+- **Editor tests for `apply_material`**: Added `SceneOpsApplyMaterialTests.cs` covering single/multi-material renderers, derived material name resolution, error cases, and `material_index` validation.
+
+### Fixed
+- **`apply_material` on multi-material renderers**: Now correctly supports applying to a specific slot (via `material_index`) or all slots when index is omitted, instead of only affecting the first slot.
+
+## [1.28.0] - 2026-01-18
+
+### Added
+- **GameObject disambiguation (Multi-Step / Agent Mode)**: When a scene operation fails with "GameObject not found", the agent can collect candidate objects (including **hierarchy path**, active state, tag/layer, and components), ask the LLM for a likely match, and request **user confirmation** before retrying.
+- **Hierarchy path targeting**: Scene operations can now target objects by full hierarchy path (e.g., `Parent/Child/ObjectName`) for more reliable selection when names are ambiguous.
+
+### Changed
+- **UPM (Git URL) package build output**:
+  - No longer copies `UnityAgent.Editor.asmdef` into the built package (avoids DLL/asmdef assembly name conflicts in Unity).
+  - Excludes `Config.meta` / `Rules.meta` from package output (these folders are intentionally excluded when empty).
+  - Creates/updates a package `.gitignore` to ignore `*.unitypackage` and common build artifacts.
+- **EmbeddingService quota handling**: When OpenAI returns quota/rate-limit errors (e.g., HTTP 429 / `insufficient_quota`), embeddings are temporarily disabled (5 minute cooldown) and warnings are de-duplicated to avoid log/API spam.
+- **Lambda proxy update required**: If using the AWS Lambda proxy, redeploy `Assets/Proxy/lambda_function.py` to prevent "Unsupported parameter: 'response_format'" errors with OpenAI
+
+### Fixed
+- **Scene operations on inactive objects**: GameObject lookups now include inactive objects, so `modify_gameobject`, `delete_gameobject`, `set_active`, and parent lookups work even when objects (or parents) are inactive.
+- **Delete retry loop**: Stop retrying deletion steps when the error indicates the object was "not found for deletion" (non-retryable).
 - **EmbeddingService JSON serialization**: Fixed JSON serialization errors after code obfuscation that caused "A member with the name '' already exists" errors when opening the AI Assistant window in a clean project
   - Request body is now built manually to avoid obfuscation issues with anonymous types
   - Added obfuscation rules to skip all JSON-related classes (Message, SuggestRequest, ResponseFormat, etc.)
 - **OpenAI Responses API compatibility**: Removed unsupported `response_format` parameter from Responses API requests
   - OpenAI's Responses API doesn't support the `response_format` parameter that was previously used for structured outputs
   - The proxy now relies on instructions to request JSON format instead
-
-### Changed
-- **Lambda proxy update recommended**: If using the AWS Lambda proxy, redeploy `Assets/Proxy/lambda_function.py` to prevent "Unsupported parameter: 'response_format'" errors with OpenAI
 
 ## [1.27.0] - 2026-01-14
 

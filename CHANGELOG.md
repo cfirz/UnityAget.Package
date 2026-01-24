@@ -7,6 +7,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.32.0] - 2026-01-24
+
+### Changed
+- **Plugin Renamed for Asset Store Compliance**: Entire plugin systematically renamed from `UnityAgent` to `AiEditorAgent`
+  - Assembly definition: `UnityAgent.Editor` → `AiEditorAgent.Editor`
+  - Package identifier: `com.cfirz.unityagent` → `com.cfirz.aieditoragent`
+  - Folder structure: `Assets/Editor/UnityAgent` → `Assets/Editor/AiEditorAgent`
+  - Data folder: `Assets/UnityAgentData` → `Assets/AiEditorAgentData`
+  - UnityPackage export path: `Assets/AiEditorAgent/` (Asset Store compliant base folder name)
+  - Build scripts, CI/CD workflows, and all documentation updated to reflect new naming
+- **Automatic Migration**: Config files automatically migrate from old `UnityAgentData` location to new `AiEditorAgentData` location on first load
+- **Git History Preserved**: All renames performed using `git mv` to preserve file history and Unity .meta GUIDs
+
 ## [1.31.0] - 2026-01-18
 
 ### Added

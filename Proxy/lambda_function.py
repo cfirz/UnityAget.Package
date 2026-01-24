@@ -1,5 +1,5 @@
 """
-AWS Lambda function for Unity AI Suggestions proxy.
+AWS Lambda function for AI Editor Agent proxy.
 Routes requests to OpenAI (Responses API) or Anthropic (Messages API) and performs light request-shaping:
 - Extracts system instructions for OpenAI Responses
 - Translates token limit fields (max_output_tokens vs max_tokens)
@@ -334,7 +334,7 @@ def lambda_handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
                 'x-api-key': api_key,
                 'anthropic-version': '2023-06-01',
                 'Content-Type': 'application/json',
-                'User-Agent': 'Unity-AI-Assistant/1.0 (AWS Lambda)'
+                'User-Agent': 'AiEditorAgent/1.0 (AWS Lambda)'
             }
             
             _log_request_summary(provider, api_request, is_streaming_request)
@@ -382,7 +382,7 @@ def lambda_handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
             request_headers = {
                 'Authorization': f'Bearer {api_key}',
                 'Content-Type': 'application/json',
-                'User-Agent': 'Unity-AI-Assistant/1.0 (AWS Lambda)'
+                'User-Agent': 'AiEditorAgent/1.0 (AWS Lambda)'
             }
             
             _log_request_summary(provider, api_request, is_streaming_request)

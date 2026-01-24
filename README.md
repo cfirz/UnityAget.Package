@@ -1,4 +1,4 @@
-# Unity AI Editor Agent
+# AI Editor Agent
 
 A powerful AI assistant integrated directly into the Unity Editor to help you write code, answer questions, and generate ideas without leaving Unity.
 
